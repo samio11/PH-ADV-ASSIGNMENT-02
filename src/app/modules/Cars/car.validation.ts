@@ -11,8 +11,8 @@ const carValidateData = z.object({
   description: z.string().min(10, 'Description is required'),
   quantity: z.number().int().default(0),
   inStock: z.boolean().default(true),
-  createdAt: z.string().default(() => new Date().toISOString()),
-  updatedAt: z.string().default(() => new Date().toISOString()),
+  createdAt: z.date().default(() => new Date()),
+  updatedAt: z.date().default(() => new Date()),
 });
 
 export default carValidateData;
