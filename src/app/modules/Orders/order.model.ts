@@ -11,6 +11,7 @@ const orderSchema = new Schema<TOrders>({
   updatedAt: { type: Date, default: Date.now },
 });
 
+// Solving -06
 orderSchema.pre('save', async function (next) {
   const orderInfo = this;
   const carId = orderInfo.car; // Extract car ID from the order
@@ -23,18 +24,15 @@ orderSchema.pre('save', async function (next) {
       throw new Error('Car not found');
     }
 
-    // Check if the car is out of stock
     if (find_the_car.quantity === 0) {
       await Cars.updateOne({ _id: carId }, { inStock: false });
       throw new Error('Car is out of stock');
     }
 
-    // Check if the requested quantity exceeds available stock
     if (find_the_car.quantity < orderInfo.quantity) {
       throw new Error(`Insufficient stock.`);
     }
 
-    // Update the car's inventory
     await Cars.updateOne(
       { _id: carId },
       {
