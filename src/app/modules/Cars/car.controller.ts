@@ -79,7 +79,7 @@ const delete_a_car_info = async (req: Request, res: Response) => {
     res.status(200).json({
       message: 'Car deleted successfully',
       success: true,
-      data: result,
+      data: {},
     });
   } catch (err) {
     res
